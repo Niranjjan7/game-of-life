@@ -1,12 +1,27 @@
-node('GOL') {
-    stage('scm') {
-        git 'https://github.com/Niranjjan7/game-of-life.git'
+pipeline {
+    agent { label 'GOL'}
+    triggers {
+        cron('H * * * *')
+        pollSCM('* * * * *')
     }
-    stage('build') {
-        sh 'mvn clean package'
+    stages {
+        stage('scm') {
+            steps {
+
+                git branch: 'master', url: 'https://github.com/Niranjjan7/game-of-life.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn package'
+            }
+        }
     }
-    stage('postbuild') {
-        junit '**/TEST-*.xml'
-        archive '**/*.war'
+    post {
+        success {
+            archive '**/gameoflife.war'
+            junit '**/TEST-*.xml'
+        }
+        
     }
 }
