@@ -8,7 +8,7 @@ pipeline {
         stage('scm') {
             steps {
 
-                git branch: 'master', url: 'https://github.com/Niranjjan7/game-of-life.git'
+                git branch: 'master', url: 'https://github.com/asquarezone/game-of-life.git'
             }
         }
         stage('build') {
