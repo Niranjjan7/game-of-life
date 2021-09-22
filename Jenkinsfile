@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'GOL'}
+    environment {
+        CI_ENV = 'DEV'
+    }
     triggers {
         cron('H * * * *')
         pollSCM('* * * * *')
