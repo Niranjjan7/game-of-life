@@ -31,14 +31,11 @@ pipeline {
         }
         stage ('SONAR ANALYSIS'){
             steps{
-                withSonarQubeEnv{
+                withSonarQubeEnv('SONAR-6.7.4'){
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
                 }
         }
-        stage('devserver'){
-            agent { label 'UBUNTU,'}
-            steps {
-                unstash name: 'golwar'
+        
     post {
         success {
             archive '**/gameoflife.war'
